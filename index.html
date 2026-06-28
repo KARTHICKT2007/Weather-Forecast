@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <meta name="description" content="Discover real-time weather forecasts with an elegant floral aesthetic. Experience accurate live conditions, hourly trends, and atmospheric metrics in a stunning glassmorphism UI.">
+    
+    <!-- Google Fonts: Poppins & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app-background">
+        <div class="glass-overlay"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header & Navigation -->
+        <header class="app-header">
+            <div class="logo-container">
+                <i class="fa-solid fa-seedling logo-icon"></i>
+                <h1 class="site-title">Weather</h1>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="city-search-input" placeholder="Search for any city (e.g., Paris, Tokyo, New York)..." autocomplete="off" aria-label="Search city">
+                    <button id="search-button" class="btn-primary" aria-label="Search">Search</button>
+                </div>
+                <button id="current-location-btn" class="btn-icon" title="Use Current Location" aria-label="Current Location">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Loading Screen / Skeleton Overlay -->
+            <div id="loading-state" class="glass-card loading-container hidden">
+                <div class="spinner"><i class="fa-solid fa-sun fa-spin"></i></div>
+                <p>Fetching beautiful skies...</p>
+            </div>
+
+            <!-- Error State Container -->
+            <div id="error-state" class="glass-card error-container hidden">
+                <i class="fa-solid fa-cloud-bolt error-icon"></i>
+                <h2 id="error-title">City Not Found</h2>
+                <p id="error-message">We couldn't find weather data for that location. Please check the spelling and try again.</p>
+                <button id="retry-btn" class="btn-secondary">Try Again</button>
+            </div>
+
+            <!-- Weather Dashboard -->
+            <div id="weather-dashboard" class="dashboard-grid">
+                
+                <!-- Section 1: Current Weather Overview -->
+                <section class="glass-card current-weather-card">
+                    <div class="card-header">
+                        <div class="location-info">
+                            <h2 id="location-name">New York, USA</h2>
+                            <p id="current-date-time">Thursday, Oct 12 | 10:30 AM</p>
+                        </div>
+                        <div class="live-badge">
+                            <span class="pulse-dot"></span> LIVE
+                        </div>
+                    </div>
+
+                    <div class="current-weather-body">
+                        <div class="temperature-display">
+                            <div class="temp-primary">
+                                <span id="current-temp-f" class="temp-value">72</span>
+                                <span class="temp-unit">°F</span>
+                            </div>
+                            <div class="temp-divider">|</div>
+                            <div class="temp-secondary">
+                                <span id="current-temp-c" class="temp-value-sub">22</span>
+                                <span class="temp-unit-sub">°C</span>
+                            </div>
+                        </div>
+                        <div class="weather-condition">
+                            <div id="weather-icon-container" class="condition-icon-wrapper">
+                                <i id="current-weather-icon" class="fa-solid fa-cloud-sun condition-icon"></i>
+                            </div>
+                            <div class="condition-text">
+                                <h3 id="weather-description">Partly Cloudy</h3>
+                                <div class="temp-range">
+                                    <span><i class="fa-solid fa-arrow-down-short-wide"></i> Low: <strong id="temp-min">65°F</strong></span>
+                                    <span><i class="fa-solid fa-arrow-up-short-wide"></i> High: <strong id="temp-max">78°F</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Atmospheric Metrics Grid -->
+                <section class="metrics-grid">
+                    <!-- Feels Like -->
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <i class="fa-solid fa-temperature-half metric-icon"></i>
+                            <h4>Feels Like</h4>
+                        </div>
+                        <div class="metric-body">
+                            <span id="metric-feels-like" class="metric-value">74°F</span>
+                            <p id="feels-like-desc" class="metric-subtext">Perfect garden weather</p>
+                        </div>
+                    </div>
+
+                    <!-- Humidity -->
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <i class="fa-solid fa-droplet metric-icon"></i>
+                            <h4>Humidity</h4>
+                        </div>
+                        <div class="metric-body">
+                            <span id="metric-humidity" class="metric-value">45%</span>
+                            <p id="humidity-desc" class="metric-subtext">Comfortable & fresh</p>
+                        </div>
+                    </div>
+
+                    <!-- Wind Speed -->
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <i class="fa-solid fa-wind metric-icon"></i>
+                            <h4>Wind Speed</h4>
+                        </div>
+                        <div class="metric-body">
+                            <span id="metric-wind" class="metric-value">12 mph</span>
+                            <p id="wind-desc" class="metric-subtext">Gentle floral breeze</p>
+                        </div>
+                    </div>
+
+                    <!-- UV Index -->
+                    <div class="glass-card metric-card">
+                        <div class="metric-header">
+                            <i class="fa-solid fa-sun-plant-wilt metric-icon"></i>
+                            <h4>UV Index</h4>
+                        </div>
+                        <div class="metric-body">
+                            <span id="metric-uv" class="metric-value">4</span>
+                            <p id="uv-desc" class="metric-subtext">Moderate sun exposure</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 3: Hourly Forecast Slider -->
+                <section class="glass-card hourly-section">
+                    <div class="section-title-bar">
+                        <i class="fa-solid fa-clock section-icon"></i>
+                        <h3>Hourly Forecast</h3>
+                    </div>
+                    <div id="hourly-forecast-container" class="hourly-scroll-container">
+                        <!-- Dynamically injected hourly items go here -->
+                    </div>
+                </section>
+
+                <!-- Section 4: 7-Day Forecast Overview -->
+                <section class="glass-card daily-section">
+                    <div class="section-title-bar">
+                        <i class="fa-solid fa-calendar-days section-icon"></i>
+                        <h3>7-Day Outlook</h3>
+                    </div>
+                    <div id="daily-forecast-container" class="daily-list-container">
+                        <!-- Dynamically injected daily items go here -->
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>Designed & Crafted by <strong>Karthick</strong></p>
+        </footer>
+    </div>
+
+    <!-- Application JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
